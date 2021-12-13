@@ -343,8 +343,8 @@ def export_final_results(args, dir, losses, mesh, mlp, network_input, vertices):
         pred_rgb = pred_rgb.detach().cpu()
         pred_normal = pred_normal.detach().cpu()
 
-        torch.save(pred_rgb, os.path.join(dir, f"colors_final.pt"))
-        torch.save(pred_normal, os.path.join(dir, f"normals_final.pt"))
+        # torch.save(pred_rgb, os.path.join(dir, f"colors_final.pt"))
+        # torch.save(pred_normal, os.path.join(dir, f"normals_final.pt"))
 
         base_color = torch.full(size=(mesh.vertices.shape[0], 3), fill_value=0.5)
         final_color = torch.clamp(pred_rgb + base_color, 0, 1)
@@ -354,12 +354,12 @@ def export_final_results(args, dir, losses, mesh, mlp, network_input, vertices):
         objbase, extension = os.path.splitext(os.path.basename(args.obj_path))
         mesh.export(os.path.join(dir, f"{objbase}_final.obj"), color=final_color)
 
-        # Run renders
-        if args.save_render:
-            save_rendered_results(args, dir, final_color, mesh)
+        # # Run renders
+        # if args.save_render:
+        #     save_rendered_results(args, dir, final_color, mesh)
 
-        # Save final losses
-        torch.save(torch.tensor(losses), os.path.join(dir, "losses.pt"))
+        # # Save final losses
+        # torch.save(torch.tensor(losses), os.path.join(dir, "losses.pt"))
 
 
 def save_rendered_results(args, dir, final_color, mesh):
